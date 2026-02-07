@@ -13,14 +13,14 @@ const initialState = {
 
 const quizReducer = (state, action) => {
   switch (action.type) {
-    case "CHANGE_STAGE":
+    case "CHANGE_STATE":
       return {
         ...state,
         gameStage: STAGES[1],
       };
 
     case "REORDER_QUESTIONS":
-      const reorderedQuestions = state.questions.sort(() => {
+      const reorderedQuestions = questions.sort(() => {
         return Math.random() - 0.5;
       });
       return {
@@ -39,8 +39,11 @@ const quizReducer = (state, action) => {
       return {
         ...state,
         currentQuestion: nextQuestion,
-        gameStage: endGame ? STAGES[2] : gameStage,
+        gameStage: endGame ? STAGES[2] : state.gameStage,
       };
+
+    case "NEW_GAME":
+      return initialState;
 
     default:
       return state;
